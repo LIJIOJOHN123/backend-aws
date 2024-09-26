@@ -105,15 +105,15 @@ app.get("/docker",(req,res)=>{
   // If we're not in production then log to the `console` with the format:
   // `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
   //
-  app.post('/upload', upload.array('photos', 3), function(req, res, next) {
-    res.send('Successfully uploaded ' + req.files.length + ' files!')
-  }) 
-app.post('/profile', upload.single('avatar'), function (req, res, next) {
-    const file = req.file
-    // req.file is the `avatar` file
-    // req.body will hold the text fields, if there were any
-    res.send(file)
-  })
+//   app.post('/upload', upload.array('photos', 3), function(req, res, next) {
+//     res.send('Successfully uploaded ' + req.files.length + ' files!')
+//   }) 
+// app.post('/profile', upload.single('avatar'), function (req, res, next) {
+//     const file = req.file
+//     // req.file is the `avatar` file
+//     // req.body will hold the text fields, if there were any
+//     res.send(file)
+//   })
 
 const authMiddleware = async(req,res,next)=>{
     if(!req.header("Authorization")){
