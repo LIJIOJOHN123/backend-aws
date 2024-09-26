@@ -8,9 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
-        users: actions/checkout@v4
+        uses: actions/checkout@v4
       - name: Login to docker hub
-        run: docker login -u ${{secret.DOCKER.USERNAME}} -p ${{secret.DOCKER.PASSWORD}}
+        run: docker login -u ${{ secret.DOCKER.USERNAME }} -p ${{ secret.DOCKER.PASSWORD }}
       - name: Build Docker Image
         run: docker build -t lijojohnrbs/node_aws .
       - name: Publish Image to docker hug
