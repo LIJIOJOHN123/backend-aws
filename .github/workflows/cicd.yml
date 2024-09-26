@@ -18,11 +18,13 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: self-hosted
+    runs-on: self-hosted 
     steps:
-      - name: Pull Image from docker hub
-        run: docker push lijojohnrbs/node_aws:latest
-      - name: Run Docker conainer
+      - name: Pull image from docker hub
+        run: docker pull integrationninjas/nodejs-app:latest 
+      - name: Delete old container
+        run: docker rm -f nodejs-app-container  
+      - name: Run Docker Container
         run: docker run -d -p  8000-8000 --name nodejs-app-container -e MONGODB_URL=mongodb+srv://lijojohnrbs1:100100100@cluster0.zdgvzgf.mongodb.net/todo -e PORT=8000
 
 
