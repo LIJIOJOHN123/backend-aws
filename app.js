@@ -165,7 +165,7 @@ const validation = (req,res,next)=>{
     }
 //user apis
 //register
-app.post("/register", userRegistraionValidator,validation,async(req,res)=>{
+app.post("/api/register", userRegistraionValidator,validation,async(req,res)=>{
     try {
         const newUser = {}
         newUser.name = req.body.name;
@@ -186,7 +186,7 @@ app.post("/register", userRegistraionValidator,validation,async(req,res)=>{
     }
 })
 //login
-app.post("/login",userLoginValidator, validation, async(req,res)=>{
+app.post("/api/login",userLoginValidator, validation, async(req,res)=>{
     try {
       const user = await User.findOne({email:req.body.email})
       if(!user){
@@ -204,7 +204,7 @@ app.post("/login",userLoginValidator, validation, async(req,res)=>{
     }
 } )
 //current
-app.get("/user", authMiddleware, async(req,res)=>{
+app.get("/api/user", authMiddleware, async(req,res)=>{
    try {
     res.send({user:req.user})
    } catch (error) {
@@ -212,7 +212,7 @@ app.get("/user", authMiddleware, async(req,res)=>{
    }
 })
 //user edit
-app.put("/user",authMiddleware,async(req,res)=>{
+app.put("/api/user",authMiddleware,async(req,res)=>{
     try {
         await User.findByIdAndUpdate({_id:req.user._id},{...req.body})
         const user = await User.findOne({_id:req.user._id})
@@ -222,7 +222,7 @@ app.put("/user",authMiddleware,async(req,res)=>{
     }
 })
 //create
-app.post("/task",taskValidation, authMiddleware,validation, async(req,res)=>{
+app.post("/api/task",taskValidation, authMiddleware,validation, async(req,res)=>{
     try {
         const task = new Task({title:req.body.title, description:req.body.description, user:req.user._id})
         await task.save()
@@ -232,7 +232,7 @@ app.post("/task",taskValidation, authMiddleware,validation, async(req,res)=>{
     }
 }) 
 //list
-app.get("/task", async(req,res)=>{
+app.get("/api/task", async(req,res)=>{
     try {
        
         const taskCount = await Task.countDocuments()
@@ -246,7 +246,7 @@ app.get("/task", async(req,res)=>{
     }
 })
 //getById
-app.get("/task:id" ,async(req,res)=>{
+app.get("/api/task:id" ,async(req,res)=>{
     try {
        const task = await Task.findById({_id:req.params.id}) 
        if(!task){
@@ -258,7 +258,7 @@ app.get("/task:id" ,async(req,res)=>{
     }
 })
 //edit
-app.put("/task:id", authMiddleware,async(req,res)=>{
+app.put("/api/task:id", authMiddleware,async(req,res)=>{
     try {
       const task = await Task.findByIdAndUpdate({_id:req.params.id, user:req.user._id},{...req.body},{new:true})
       res.status(200).send({task, message:"Updated successfully"})
@@ -267,7 +267,7 @@ app.put("/task:id", authMiddleware,async(req,res)=>{
     }
 })
 //delete
-app.delete("/task:id", authMiddleware, async(req,res)=>{
+app.delete("/api/task:id", authMiddleware, async(req,res)=>{
     try {
         const task =await Task.findByIdAndDelete({_id:req.params.id,user:req.user._id})
         res.status(200).send({message:"Task delete successfully",task})
